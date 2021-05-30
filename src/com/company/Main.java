@@ -93,3 +93,16 @@ class Index extends Thread {
         }
     }
 }
+
+class IndexTwo extends Thread {
+    ConcurrentHashMap<String, HashSet<String>> index;
+    List<File> file;
+    int startIndex;
+    int endIndex;
+    IndexTwo(List<File> file, int startIndex, int endIndex, ConcurrentHashMap<String, HashSet<String>> index) {
+        this.startIndex = startIndex;
+        this.endIndex = endIndex;
+        this.file = file;
+        this.index = index;
+    }
+}
