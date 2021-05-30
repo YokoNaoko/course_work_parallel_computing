@@ -25,7 +25,7 @@ public class Main {
         }
     }
 
-    public static void readFile(List<File> lst) throws FileNotFoundException {
+    public static void readFile(List<File> lst) throws FileNotFoundException, InterruptedException {
         for(int i=0;i<lst.size();i++) {
             Scanner scanner = new Scanner(new File(String.valueOf(lst.get(i))));
             tempList = new ArrayList<>();
@@ -34,7 +34,20 @@ public class Main {
                 String[] splitString = temp.toLowerCase().split("\\W+");
                 tempList.addAll(Arrays.asList(splitString));
             }
+            parallel(String.valueOf(lst.get(i)));
             // System.out.println(lst.get(i) + " : " + tempList);
+        }
+    }
+
+    public static void parallel(String filename) throws InterruptedException {
+        Index[] Index = new Index[NUMBER_THREADS];
+        for (int i = 0; i < NUMBER_THREADS; i++) {
+            Index[i] = new Index(tempList, tempList.size() / NUMBER_THREADS * i,
+                    i == (NUMBER_THREADS - 1) ? tempList.size() : tempList.size() / NUMBER_THREADS * (i + 1), filename,index);
+            Index[i].start();
+        }
+        for (int i = 0; i < NUMBER_THREADS; i++) {
+            Index[i].join();
         }
     }
 }
