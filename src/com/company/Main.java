@@ -13,7 +13,8 @@ public class Main {
     public static void main(String args[]) throws FileNotFoundException, InterruptedException {
         File[] filePath = {new File("datasets/test/neg"),new File("datasets/test/pos"),new File("datasets/train/neg"),
                 new File("datasets/train/pos"),new File("datasets/train/unsup")};
-        readDirectory(filePath);
+//        readDirectory(filePath);
+        readDirectoryTwo(filePath);
         findFiles("in Ontario");
     }
 
@@ -26,12 +27,13 @@ public class Main {
         }
     }
 
-    public static void readDirectoryTwo(File[] filePath){
+    public static void readDirectoryTwo(File[] filePath) throws InterruptedException {
         for (File file:filePath) {
             File dir = new File(String.valueOf(file));
             File[] arrFiles = dir.listFiles();
             List<File> lst = Arrays.asList(arrFiles);
             //System.out.println(lst);
+            parallelTwo(lst);
         }
     }
 
@@ -58,6 +60,18 @@ public class Main {
         }
         for (int i = 0; i < NUMBER_THREADS; i++) {
             Index[i].join();
+        }
+    }
+
+    public static void parallelTwo(List<File> tempList) throws InterruptedException {
+        IndexTwo[] IndexTwo = new IndexTwo[NUMBER_THREADS];
+        for (int i = 0; i < NUMBER_THREADS; i++) {
+            IndexTwo[i] = new IndexTwo(tempList, tempList.size() / NUMBER_THREADS * i,
+                    i == (NUMBER_THREADS - 1) ? tempList.size() : tempList.size() / NUMBER_THREADS * (i + 1),index);
+            IndexTwo[i].start();
+        }
+        for (int i = 0; i < NUMBER_THREADS; i++) {
+            IndexTwo[i].join();
         }
     }
 
