@@ -105,4 +105,24 @@ class IndexTwo extends Thread {
         this.file = file;
         this.index = index;
     }
+    public void run() {
+        for (int i = startIndex; i < endIndex; i++) {
+            Scanner scanner = null;
+            try {
+                scanner = new Scanner(new File(String.valueOf(file.get(i))));
+                while (scanner.hasNextLine()) {
+                    String temp = scanner.nextLine();
+                    for(String words : temp.toLowerCase().split("\\W+")){
+//                        if(!index.containsKey(words))
+//                            index.put(words,new HashSet<>());
+                        index.computeIfAbsent(words, k -> new HashSet<>());
+                        index.get(words).add(String.valueOf(file.get(i)));
+                    }
+
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
