@@ -5,8 +5,10 @@ import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Main {
+    static ArrayList<String> tempList = new ArrayList<>();
+    static int NUMBER_THREADS = 1;
+    static ConcurrentHashMap<String, HashSet<String>> index= new ConcurrentHashMap<>();
     public static void main(String args[]) {
-
     }
 }
 
