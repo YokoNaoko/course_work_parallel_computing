@@ -10,10 +10,11 @@ public class Main {
     static int NUMBER_THREADS = 1;
     static ConcurrentHashMap<String, HashSet<String>> index= new ConcurrentHashMap<>();
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws FileNotFoundException, InterruptedException {
         File[] filePath = {new File("datasets/test/neg"),new File("datasets/test/pos"),new File("datasets/train/neg"),
                 new File("datasets/train/pos"),new File("datasets/train/unsup")};
-
+        readDirectory(filePath);
+        findFiles("in Ontario");
     }
 
     public static void readDirectory(File[] filePath) throws FileNotFoundException, InterruptedException {
@@ -48,6 +49,23 @@ public class Main {
         }
         for (int i = 0; i < NUMBER_THREADS; i++) {
             Index[i].join();
+        }
+    }
+
+    public static void findFiles(String message){
+        String[] words = message.toLowerCase().split("\\W+");
+        if(index.get(words[0])!=null){
+            ArrayList<String> fileResult = new ArrayList<>(index.get(words[0]));
+            for(String word: words){
+                fileResult.retainAll(index.get(word));
+            }
+            if(fileResult.size()!=0) {
+                System.out.println(fileResult);
+            }else {
+                System.out.println("file not found");
+            }
+        }else {
+            System.out.println("file not found");
         }
     }
 }
