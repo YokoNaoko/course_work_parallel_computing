@@ -3,19 +3,24 @@ package com.company;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.time.Instant;
+import java.time.Duration;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Main {
     static ArrayList<String> tempList = new ArrayList<>();
-    static int NUMBER_THREADS = 1;
+    static int NUMBER_THREADS = 100;
     static ConcurrentHashMap<String, HashSet<String>> index= new ConcurrentHashMap<>();
 
     public static void main(String args[]) throws FileNotFoundException, InterruptedException {
         File[] filePath = {new File("datasets/test/neg"),new File("datasets/test/pos"),new File("datasets/train/neg"),
                 new File("datasets/train/pos"),new File("datasets/train/unsup")};
+        Instant start = Instant.now();
 //        readDirectory(filePath);
         readDirectoryTwo(filePath);
-        findFiles("in Ontario");
+        Instant finish = Instant.now();
+        System.out.println("Time: " + Duration.between(start, finish).toMillis() + " ms");
+        findFiles("I saw this movie");
     }
 
     public static void readDirectory(File[] filePath) throws FileNotFoundException, InterruptedException {
