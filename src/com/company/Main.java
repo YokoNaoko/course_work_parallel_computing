@@ -12,7 +12,7 @@ public class Main {
     static int NUMBER_THREADS = 5;
     static ConcurrentHashMap<String, HashSet<String>> index= new ConcurrentHashMap<>();
 
-    public static void main(String args[]) throws FileNotFoundException, InterruptedException {
+    public static void main(String[] args) throws FileNotFoundException, InterruptedException {
         File[] filePath = {new File("datasets/test/neg"),new File("datasets/test/pos"),new File("datasets/train/neg"),
                 new File("datasets/train/pos"),new File("datasets/train/unsup")};
         String message = null;
@@ -50,7 +50,7 @@ public class Main {
     }
 
     public static void readFile(List<File> lst) throws FileNotFoundException, InterruptedException {
-        for(int i=0;i<lst.size();i++) {
+        for(int i = 0; i < lst.size(); i++) {
             Scanner scanner = new Scanner(new File(String.valueOf(lst.get(i))));
             tempList = new ArrayList<>();
             while (scanner.hasNextLine()) {
@@ -89,12 +89,12 @@ public class Main {
 
     public static void findFiles(String message){
         String[] words = message.toLowerCase().split("\\W+");
-        if(index.get(words[0])!=null){
+        if(index.get(words[0]) != null){
             ArrayList<String> fileResult = new ArrayList<>(index.get(words[0]));
             for(String word: words){
                 fileResult.retainAll(index.get(word));
             }
-            if(fileResult.size()!=0) {
+            if(fileResult.size() != 0) {
                 System.out.println(fileResult);
             }else {
                 System.out.println("file not found");
