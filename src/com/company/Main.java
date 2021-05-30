@@ -23,4 +23,13 @@ class Index extends Thread {
         this.filename = filename;
         this.index = index;
     }
+    public void run() {
+        for (int i = startIndex; i < endIndex; i++) {
+//            if (!index.containsKey(words.get(i))) {
+//                index.put(words.get(i), new HashSet<>());
+//            }
+            index.computeIfAbsent(words.get(i), k -> new HashSet<>());
+            index.get(words.get(i)).add(filename);
+        }
+    }
 }
