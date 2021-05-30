@@ -1,14 +1,27 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Main {
     static ArrayList<String> tempList = new ArrayList<>();
     static int NUMBER_THREADS = 1;
     static ConcurrentHashMap<String, HashSet<String>> index= new ConcurrentHashMap<>();
+
     public static void main(String args[]) {
+        File[] filePath = {new File("datasets/test/neg"),new File("datasets/test/pos"),new File("datasets/train/neg"),
+                new File("datasets/train/pos"),new File("datasets/train/unsup")};
+
+    }
+
+    public static void readDirectory(File[] filePath){
+        for (File file:filePath) {
+            File dir = new File(String.valueOf(file));
+            File[] arrFiles = dir.listFiles();
+            List<File> lst = Arrays.asList(arrFiles);
+        }
     }
 }
 
