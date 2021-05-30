@@ -26,6 +26,15 @@ public class Main {
         }
     }
 
+    public static void readDirectoryTwo(File[] filePath){
+        for (File file:filePath) {
+            File dir = new File(String.valueOf(file));
+            File[] arrFiles = dir.listFiles();
+            List<File> lst = Arrays.asList(arrFiles);
+            //System.out.println(lst);
+        }
+    }
+
     public static void readFile(List<File> lst) throws FileNotFoundException, InterruptedException {
         for(int i=0;i<lst.size();i++) {
             Scanner scanner = new Scanner(new File(String.valueOf(lst.get(i))));
