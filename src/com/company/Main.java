@@ -9,18 +9,25 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Main {
     static ArrayList<String> tempList = new ArrayList<>();
-    static int NUMBER_THREADS = 100;
+    static int NUMBER_THREADS = 5;
     static ConcurrentHashMap<String, HashSet<String>> index= new ConcurrentHashMap<>();
 
     public static void main(String args[]) throws FileNotFoundException, InterruptedException {
         File[] filePath = {new File("datasets/test/neg"),new File("datasets/test/pos"),new File("datasets/train/neg"),
                 new File("datasets/train/pos"),new File("datasets/train/unsup")};
+        String message = null;
         Instant start = Instant.now();
 //        readDirectory(filePath);
         readDirectoryTwo(filePath);
         Instant finish = Instant.now();
         System.out.println("Time: " + Duration.between(start, finish).toMillis() + " ms");
-        findFiles("I saw this movie");
+        System.out.println("Enter your message: ");
+        Scanner in = new Scanner(System.in);
+        if(in.hasNextLine())
+        {
+            message = in.nextLine();
+        }
+        findFiles(message);
     }
 
     public static void readDirectory(File[] filePath) throws FileNotFoundException, InterruptedException {
