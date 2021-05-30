@@ -16,11 +16,25 @@ public class Main {
 
     }
 
-    public static void readDirectory(File[] filePath){
+    public static void readDirectory(File[] filePath) throws FileNotFoundException, InterruptedException {
         for (File file:filePath) {
             File dir = new File(String.valueOf(file));
             File[] arrFiles = dir.listFiles();
             List<File> lst = Arrays.asList(arrFiles);
+            readFile(lst);
+        }
+    }
+
+    public static void readFile(List<File> lst) throws FileNotFoundException {
+        for(int i=0;i<lst.size();i++) {
+            Scanner scanner = new Scanner(new File(String.valueOf(lst.get(i))));
+            tempList = new ArrayList<>();
+            while (scanner.hasNextLine()) {
+                String temp = scanner.nextLine();
+                String[] splitString = temp.toLowerCase().split("\\W+");
+                tempList.addAll(Arrays.asList(splitString));
+            }
+            // System.out.println(lst.get(i) + " : " + tempList);
         }
     }
 }
